@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>评委评分系统-进行中活动</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" th:href="@{/adminlte2/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/adminlte2/bower_components/font-awesome/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{/adminlte2/bower_components/Ionicons/css/ionicons.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/adminlte2/dist/css/AdminLTE.min.css}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" th:href="@{/adminlte2/dist/css/skins/_all-skins.min.css}">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <style type="text/css">
+        .m-content {
+            background-color: #fff;
+            margin: 0 0 100px;
+            border-radius: 3px;
+            border: 1px solid #dddde1;
+        }
+        .m-content-tab {
+            cursor: pointer;
+        }
+        .m-content-tab {
+            background-color: #fafafa;
+            height: 60px;
+        }
+        .m-border-grey {
+            border-right: 1px solid #dddee1;
+        }
+
+        .f-mb20 {
+            margin-bottom: 20px!important;
+        }
+        .f-mt15 {
+            margin-top: 15px;
+        }
+        .on {
+            color: #3c8dbc;
+        }
+        .f-font18 {
+            font-size: 18px;
+        }
+
+        .s-black {
+            color: #424242!important;
+        }
+        .current-l-on {
+            position: absolute;
+            top: 40px;
+            width: 30px;
+            height: 5px;
+            background-color: #3c8dbc;
+            right: 105px;
+        }
+        .current-r-on {
+            position: absolute;
+            top: 40px;
+            width: 30px;
+            height: 5px;
+            background-color: #3c8dbc;
+            left: 105px;
+        }
+        .m-roadshow-list {
+            padding: 30px 30px 0;
+        }
+        .m-roadshow-list-card {
+            border: 1px solid #dddee1;
+            padding: 15px 20px;
+            position: relative;
+            margin-right: 0;
+            margin-left: 0;
+        }
+        .f-table {
+            display: table;
+        }
+
+        /*.m-role-main {*/
+        /*    background: url(../img/owner_tag.png) 50% 50% no-repeat;*/
+        /*}*/
+        .m-roadshow-list-icon {
+            position: absolute;
+            top: 25px;
+            right: -9px;
+            width: 80px;
+            height: 40px;
+        }
+        .m-roadshow-list-logo {
+            width: 210px;
+            height: 210px;
+            margin-left: 20px;
+        }
+
+        .f-table-cell {
+            display: table-cell;
+        }
+        .f-table-cell, .i-checks>i, .list-icon i, .m-form-box .form-group .m-input, .navbar-brand img {
+            vertical-align: middle;
+        }
+        .m-home-img img, .m-hpoto img, .m-roadshow-list-img img, .m-roadshow-list-logo img {
+            object-fit: cover;
+        }
+        img {
+            vertical-align: middle;
+        }
+        .m-roadshow-list-content {
+            margin-top: 10px;
+        }
+        .m-roadshow-list-content {
+            padding-left: 40px;
+            padding-right: 10px;
+            vertical-align: top;
+        }
+
+        .f-fullwidth {
+            width: 100%;
+        }
+        .f-table-cell {
+            display: table-cell;
+        }
+        .f-table-cell, .i-checks>i, .list-icon i, .m-form-box .form-group .m-input, .navbar-brand img {
+            vertical-align: middle;
+        }
+        .m-roadshow-list-content-title {
+            height: 65px;
+            display: -webkit-box;
+            overflow: hidden;
+            padding-top: 10px;
+        }
+
+        .f-mb10 {
+            margin-bottom: 10px;
+        }
+        .f-font22 {
+            font-size: 22px;
+        }
+        .s-black {
+            color: #424242!important;
+        }
+        .m-comments p, .m-roadshow-list-content-title {
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .f-table {
+            display: table;
+        }
+        .f-mr15 {
+            margin-right: 15px;
+        }
+
+        .f-table-cell {
+            display: table-cell;
+        }
+        .f-table-cell, .i-checks>i, .list-icon i, .m-form-box .form-group .m-input, .navbar-brand img {
+            vertical-align: middle;
+        }
+        .f-font14 {
+            font-size: 14px!important;
+        }
+        .s-grey {
+            color: #97999a;
+        }
+        .f-table-cell {
+            display: table-cell;
+        }
+        .f-table-cell, .i-checks>i, .list-icon i, .m-form-box .form-group .m-input, .navbar-brand img {
+            vertical-align: middle;
+        }
+        .f-mt15 {
+            margin-top: 15px;
+        }
+        .f-table {
+            display: table;
+        }
+        .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p {
+            margin: 0;
+            padding: 0;
+        }
+        .m-roadshow-list-code {
+            height: 26px;
+            line-height: 26px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .f-inblock {
+            display: inline-block;
+        }
+        .f-mr12 {
+            margin-right: 12px;
+        }
+        .f-font16 {
+            font-size: 16px;
+        }
+        .s-light-gray {
+            color: #999!important;
+        }
+        .f-font20 {
+            font-size: 20px;
+        }
+        .s-black {
+            color: #424242!important;
+        }
+        .f-mr12 {
+            margin-right: 12px;
+        }
+
+        .f-font16 {
+            font-size: 16px;
+        }
+        .s-light-gray {
+            color: #999!important;
+        }
+        .m-roadshow-list-appply-btn a, .m-roadshow-list-check-btn a, .m-roadshow-list-check-btn_a, .m-roadshow-list-edit-btn a, .m-roadshow-list-edit-btn_a {
+            line-height: 1;
+        }
+
+        .m-roadshow-list-check-btn, .m-roadshow-list-check-btn_a, .m-roadshow-list-edit-btn, .m-roadshow-list-edit-btn_a {
+            border-right: 1px solid #dddee1;
+            padding: 0 20px;
+        }
+        .m-roadshow-list-appply-btn, .m-roadshow-list-edit-btn, .m-roadshow-list-edit-btn_a {
+            /*border-left: 1px solid #dddee1;*/
+        }
+        .f-font14 {
+            font-size: 14px!important;
+        }
+        .f-blue {
+            color: #3c8dbc!important;
+        }
+        .pull-right {
+            float: right!important;
+        }
+        .content-ico{
+            font-size: 20px;
+            margin-right: 10px;
+            color: gainsboro;
+        }
+
+        .content-ico2{
+            font-size: 15px;
+            margin-right: 5px;
+            color:#3c8dbc;
+        }
+    </style>
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+
+    <header class="main-header">
+        <nav class="navbar navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="index" class="navbar-brand"><b>评委打分系统</b></a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index">首页 <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="list">我的活动</a></li>
+                        <li><a href="new">创建活动</a></li>
+                    </ul>
+                    <!--form class="navbar-form navbar-left" role="search">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
+                      </div>
+                    </form-->
+                </div>
+                <!-- /.navbar-collapse -->
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li class="dropdown messages-menu" style="display: none">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="label label-success">4</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 4 messages</li>
+                                <li>
+                                    <!-- inner menu: contains the messages -->
+                                    <ul class="menu">
+                                        <li><!-- start message -->
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <!-- User Image -->
+                                                    <img th:src="@{/adminlte2/dist/img/user2-160x160.jpg}"
+                                                         class="img-circle" alt="User Image">
+                                                </div>
+                                                <!-- Message title and timestamp -->
+                                                <h4>
+                                                    Support Team
+                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                </h4>
+                                                <!-- The message -->
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <!-- end message -->
+                                    </ul>
+                                    <!-- /.menu -->
+                                </li>
+                                <li class="footer"><a href="#">See All Messages</a></li>
+                            </ul>
+                        </li>
+                        <!-- /.messages-menu -->
+
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu" style="display: none">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 10 notifications</li>
+                                <li>
+                                    <!-- Inner Menu: contains the notifications -->
+                                    <ul class="menu">
+                                        <li><!-- start notification -->
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li>
+                                        <!-- end notification -->
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
+                        <!-- Tasks Menu -->
+                        <li class="dropdown tasks-menu" style="display: none">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">9</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You have 9 tasks</li>
+                                <li>
+                                    <!-- Inner menu: contains the tasks -->
+                                    <ul class="menu">
+                                        <li><!-- Task item -->
+                                            <a href="#">
+                                                <!-- Task title and progress text -->
+                                                <h3>
+                                                    Design some buttons
+                                                    <small class="pull-right">20%</small>
+                                                </h3>
+                                                <!-- The progress bar -->
+                                                <div class="progress xs">
+                                                    <!-- Change the css width attribute to simulate progress -->
+                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                         role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                         aria-valuemax="100">
+                                                        <span class="sr-only">20% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">View all tasks</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img th:src="@{/adminlte2/dist/img/user2-160x160.jpg}" class="user-image"
+                                     alt="User Image">
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">管理员</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img th:src="@{/adminlte2/dist/img/user2-160x160.jpg}" class="img-circle"
+                                         alt="User Image">
+
+                                    <p>
+                                        管理员
+                                        <small>2019/6/30 14:30</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body" style="display: none">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">退出登录</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-custom-menu -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </header>
+    <!-- Full Width Column -->
+    <div class="content-wrapper">
+        <div class="container">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    我的路演
+                    <small></small>
+                </h1>
+                <ol class="breadcrumb" style="display: none">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li><a href="#">Layout</a></li>
+                    <li class="active">Top Navigation</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="m-content">
+                    <div class="m-content-tab">
+                        <div class="row">
+                            <div class="col-xs-6 f-mt15 f-mb20 m-border-grey text-right">
+                        <span>
+                            <span class="f-font18 s-black" style="margin-right:75px;">
+                                进行中
+                            </span>
+                            <span class="current-l-on"></span>
+                        </span>
+                            </div>
+                            <div class="col-xs-6 f-mt15 f-mb20">
+                        <span >
+                            <span class="f-font18 s-black on" style="margin-left:75px;">
+                                <a href="list_off">已结束</a>
+                            </span>
+                            <span class=""></span>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <!-- ngRepeat: item in list -->
+                        <div class="m-roadshow-list">
+                            <div class="f-table m-roadshow-list-card">
+                                <!-- 角色 -->
+<!--                                <div class="m-roadshow-list-icon m-role-main"-->
+<!--                                     ng-class="{'m-role-main': item.user_type == '0', 'm-role-project': item.user_type == '1' || item.user_type == '4', 'm-role-judge': item.user_type == '2'}"></div>-->
+                                <div class="f-table-cell m-roadshow-list-logo">
+                                    <div style="width:210px;height:210px">
+                                        <img alt="logo" width="210" height="210"
+                                             th:src="@{/image/act_pic.png}">
+                                    </div>
+                                </div>
+                                <div class="f-table-cell f-fullwidth m-roadshow-list-content">
+                                    <p class="f-font22 s-black f-mb10 m-roadshow-list-content-title"
+                                       style="margin-right:50px">
+                                        测试路演
+                                    </p>
+                                    <p class="f-table">
+                                        <span class="glyphicon glyphicon-home content-ico"></span>
+                                        <span class="f-font14 s-grey f-table-cell">
+                                    测试单位
+                                </span>
+                                    </p>
+                                    <p class="f-table f-mt15">
+                                        <span class="glyphicon glyphicon-time content-ico"></span>
+                                        <span class="f-font14 s-grey f-table-cell">
+                                    2019/06/12-2019/06/12
+                                </span>
+                                    </p>
+                                    <div class="f-mt15 f-mb20 f-table">
+                                        <span class="glyphicon glyphicon-map-marker content-ico"></span>
+                                        <span class="f-font14 s-grey f-table-cell">
+                                	测试单位
+                                </span>
+                                        <!-- 汇总可见 -->
+                                        <!-- 当页面为我主办的并且路演不为结束状态时显示 -->
+                                        <!--<div class="f-table-cell" style="width:140px;vertical-align: top;" ng-show="item.user_type == 0 && item.state != '3'">
+                                            <div class="m-summary" ng-class="{'m-summary-on': item.is_live == '1','m-summary-off': item.is_live == '0'}" ng-click="changeLive(item)">
+                                                {{item.is_live == '1' ? '关闭' :'开启'}}汇总可见
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="m-roadshow-list-code">
+                                        <div class="f-inblock">
+                                            <span class="f-font16 s-light-gray f-mr12">
+                                                评委码
+                                            </span>
+                                            <span class="f-font20 s-black" style="margin-right:40px;">
+                                                DMNP
+                                            </span>
+                                            <span class="f-font16 s-light-gray f-mr12">
+                                                路演码
+                                            </span>
+                                            <span class="f-font20 s-black">
+                                                GXTP
+                                            </span>
+                                        </div>
+                                        <!-- 常规的路演列表显示 -->
+                                        <span class="pull-right" style="margin-top: 5px;">
+                                            <span class="pull-right">
+                                                <!-- 主办方 -->
+                                                <a href="#" class="f-font14 f-blue pull-right m-roadshow-list-edit-btn_a">
+                                                    <span class="glyphicon glyphicon-search content-ico2"></span>
+                                                    查看活动
+                                                </a>
+                                            </span>
+                                            <span class="pull-right">
+                                                <!-- 主办方 -->
+                                                <a href="#" class="f-font14 f-blue pull-right m-roadshow-list-edit-btn_a">
+                                                    <span class="glyphicon glyphicon-edit content-ico2"></span>
+                                                    编辑活动
+                                                </a>
+                                            </span>
+                                            <!-- 主办方报名管理 -->
+                                            <span class="pull-right">
+                                                <a href="#" class="f-font14 f-blue pull-right m-roadshow-list-edit-btn_a">
+                                                    <span class="glyphicon glyphicon-th content-ico2"></span>
+                                                    报名管理
+                                                </a>
+                                            </span>
+                                            <!-- 项目方报名路演 -->
+                                            <span class="pull-right">
+                                                <a href="#" class="f-font14 f-blue pull-right m-roadshow-list-edit-btn_a">
+                                                    <span class="glyphicon glyphicon-list-alt content-ico2"></span>
+                                                    活动报名
+                                                </a>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end ngRepeat: item in list -->
+                    </div>
+
+                    <!--缺省状态-->
+                    <div class="m-default-img text-center ">
+                        <img th:src="@{/image/no_act_pic.png}">
+                        <p class="f-font14 s-grey">目前还没有活动，赶紧去创建活动吧！</p>
+                    </div>
+                    <!--缺省状态-->
+                    <div class="text-right f-ml20 f-mb60" style="padding-right:60px">
+                        <div class="page-list">
+                            <ul class="pagination" style="line-height:34px">
+                                <li class="disabled">
+                                    <span>«</span></li><!-- ngRepeat: item in pageList track by $index -->
+                                <li><span>1</span>
+                                </li><!-- end ngRepeat: item in pageList track by $index -->
+                                <li class="disabled"><span>»</span></li>&nbsp;&nbsp;共&nbsp;1&nbsp;条信息&nbsp;&nbsp;&nbsp;第1页/共1页
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="container">
+            <strong>Copyright &copy; 2019 <a href="http://www.cqcxcyct.com">重庆科技金融服务中心有限公司</a>.</strong> All rights
+            reserved.
+        </div>
+        <!-- /.container -->
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script th:src="@{/adminlte2/bower_components/jquery/dist/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script th:src="@{/adminlte2/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+<!-- SlimScroll -->
+<script th:src="@{/adminlte2/bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+<!-- FastClick -->
+<script th:src="@{/adminlte2/bower_components/fastclick/lib/fastclick.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/adminlte2/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<script th:src="@{/adminlte2/dist/js/demo.js}"></script>
+</body>
+</html>

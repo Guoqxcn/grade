@@ -1,12 +1,27 @@
 package com.tfsc.grade.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class IndexController {
-    @RequestMapping("/index")
+    @RequestMapping(value={"","/index"})
     public String index(){
-        return "hello,index.auto......";
+        return "index";
+    }
+
+    @RequestMapping("list")
+    public String list(){
+        return "list";
+    }
+
+    @RequestMapping("list_off")
+    public String listOff(){
+        return "list_off";
+    }
+
+    @RequestMapping("new")
+    public String newAct(){
+        return "new";
     }
 }
